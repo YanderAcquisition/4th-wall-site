@@ -1,0 +1,372 @@
+/* ==========================================================================
+   Case studies: portfolio cards and the case study pages
+   ========================================================================== */
+
+/* --- Portfolio grid ------------------------------------------------------ */
+.case-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;margin-top:54px}
+.case-card{grid-column:span 6;background:var(--white);border:1px solid var(--border);display:flex;flex-direction:column;min-height:100%}
+.case-card:nth-child(3n){grid-column:span 12}
+.case-card__media{aspect-ratio:16/9;overflow:hidden;background:var(--pale)}
+.case-card:nth-child(3n) .case-card__media{aspect-ratio:21/9}
+.case-card__media img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease-out)}
+.case-card:hover .case-card__media img{transform:scale(1.035)}
+.case-card__content{padding:30px 32px 34px;display:flex;flex-direction:column;flex:1}
+.case-card__meta{display:flex;gap:14px;align-items:center;color:var(--purple);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.case-card__title{font-family:var(--display);font-size:clamp(25px,2.5vw,38px);line-height:1.04;letter-spacing:-.025em;margin-top:13px}
+.case-card__text{font-size:16px;line-height:1.65;color:var(--muted);max-width:58ch;margin-top:15px}
+.case-card__link{margin-top:26px;align-self:flex-start}
+@media(max-width:800px){.case-card,.case-card:nth-child(3n){grid-column:span 12}}
+
+
+/* --- Case study page ------------------------------------------------------
+   One rhythm throughout: a 4 / 8 column split, labels on the left carrying a
+   short rule, content on the right. Photography does the decorating.
+   -------------------------------------------------------------------------- */
+.cs-split {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  gap: 32px 6vw;
+  align-items: start;
+}
+.cs-label {
+  border-top: 2px solid currentColor;
+  padding-top: 16px;
+  max-width: 220px;
+}
+.cs-h2 {
+  font-family: var(--display);
+  font-size: clamp(30px, 3.2vw, 48px);
+  line-height: 1.05;
+  letter-spacing: -.03em;
+  font-weight: 700;
+  color: var(--ink);
+  max-width: 17ch;
+}
+.cs-copy p:not(.eyebrow) {
+  font-size: 18px;
+  line-height: 1.75;
+  color: var(--slate);
+  max-width: 62ch;
+}
+.cs-copy p:not(.eyebrow) + p { margin-top: 22px; }
+.cs-copy .cs-h2 + p { margin-top: 28px; }
+
+
+/* Hero ribbon: the photograph is the background, full bleed. */
+.cs-hero {
+  position: relative;
+  display: flex;
+  min-height: clamp(580px, calc(100vh - 93px), 860px);
+  color: var(--white);
+  background: var(--ink);
+  overflow: hidden;
+  isolation: isolate;
+}
+.cs-hero__media { position: absolute; inset: 0; z-index: -1; }
+.cs-hero__media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  animation: cs-settle 2.6s var(--ease-out) both;
+}
+/* Scrim: dark along the bottom where the type sits, lighter up top so the
+   photograph still reads. */
+.cs-hero__media::after {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(0deg, rgba(8, 0, 35, .97) 0%, rgba(8, 0, 35, .8) 30%, rgba(8, 0, 35, .25) 68%, rgba(8, 0, 35, .45) 100%),
+    linear-gradient(90deg, rgba(8, 0, 35, .55) 0%, rgba(8, 0, 35, 0) 65%);
+}
+.cs-hero__inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 48px;
+  padding-top: clamp(28px, 4vw, 44px);
+  padding-bottom: clamp(36px, 5vw, 60px);
+}
+.cs-hero__eyebrow { color: var(--yellow); }
+.cs-hero__title {
+  margin-top: 16px;
+  font-family: var(--display);
+  font-size: clamp(58px, 9.4vw, 146px);
+  line-height: .9;
+  letter-spacing: -.05em;
+  font-weight: 800;
+  color: var(--white);
+}
+.cs-hero__lede {
+  margin-top: 26px;
+  max-width: 46ch;
+  font-size: clamp(18px, 1.5vw, 21px);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, .85);
+}
+.cs-facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: clamp(34px, 4.5vw, 56px) 0 0;
+  border-top: 1px solid rgba(255, 255, 255, .24);
+}
+.cs-facts > div { padding: 18px 24px 0 0; }
+.cs-facts > div + div { padding-left: 24px; border-left: 1px solid rgba(255, 255, 255, .24); }
+.cs-facts dt {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .56);
+}
+.cs-facts dd { margin: 8px 0 0; font-size: 16px; line-height: 1.5; color: var(--white); }
+
+@keyframes cs-settle { from { scale: 1.1; } to { scale: 1; } }
+.js .cs-hero__eyebrow { animation: left-in 1.2s var(--ease-out) .1s both; }
+.js .cs-hero__title   { animation: rise-in 1.5s var(--ease-out) .2s both; }
+.js .cs-hero__lede    { animation: right-in 1.3s var(--ease-out) .55s both; }
+.js .cs-facts         { animation: lift-in 1.2s var(--ease-out) .8s both; }
+
+
+/* Overview */
+.cs-overview { padding-block: clamp(48px, 5.5vw, 84px); }
+.cs-copy .cs-intro {
+  font-family: var(--display);
+  font-size: clamp(24px, 2.35vw, 34px);
+  line-height: 1.32;
+  letter-spacing: -.018em;
+  font-weight: 500;
+  color: var(--ink);
+  max-width: 34ch;
+}
+.cs-overview .cs-copy p:not(.cs-intro) { margin-top: 26px; }
+
+
+/* Statement band */
+.cs-statement {
+  background: var(--ink);
+  color: var(--white);
+  padding-block: clamp(48px, 5.5vw, 84px);
+}
+.cs-statement blockquote {
+  grid-column: 2;
+  color: var(--white);
+  margin: 0;
+  max-width: 23ch;
+  font-family: var(--display);
+  font-size: clamp(30px, 3.7vw, 54px);
+  line-height: 1.1;
+  letter-spacing: -.03em;
+  font-weight: 700;
+}
+.cs-statement blockquote::before {
+  content: "";
+  display: block;
+  width: 64px; height: 4px;
+  margin-bottom: 34px;
+  background: var(--yellow);
+}
+
+
+/* What we handle: a ruled, numbered list. */
+.cs-scope { background: var(--pale); padding-block: clamp(48px, 5.5vw, 84px); }
+.cs-scope .cs-h2 { margin-top: 18px; }
+.cs-scope__list {
+  list-style: none;
+  margin: 0; padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 44px;
+}
+.cs-scope__list li {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ink);
+}
+.cs-scope__list li:nth-child(-n+2) { border-top: 1px solid var(--border); }
+.cs-scope__list li span {
+  flex: none;
+  min-width: 26px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  color: var(--purple);
+}
+
+
+/* Story: photograph and copy, offset. */
+.cs-story { padding-block: clamp(48px, 5.5vw, 84px); }
+.cs-story__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 40px 6vw;
+  align-items: center;
+}
+.cs-story__media { margin: 0; overflow: hidden; background: var(--pale); }
+.cs-story__media img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.cs-story__media--tall img { aspect-ratio: 4 / 5; }
+.cs-story__copy .eyebrow { margin-bottom: 18px; }
+
+
+/* Video */
+.cs-video {
+  background: var(--ink);
+  color: var(--white);
+  padding-block: clamp(48px, 5.5vw, 84px);
+}
+.cs-video .cs-split { align-items: end; margin-bottom: clamp(32px, 4vw, 48px); }
+.cs-video .cs-h2 { color: var(--white); }
+.video-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #000;
+}
+.video-frame video,
+.video-frame iframe {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  border: 0;
+  object-fit: cover;
+}
+.video-caption {
+  margin-top: 18px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, .62);
+  max-width: 66ch;
+}
+
+
+/* Gallery: two photographs, deliberately unequal. */
+.cs-gallery { padding-top: clamp(48px, 5.5vw, 84px); }
+.cs-gallery__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(16px, 2vw, 28px);
+  align-items: end;
+}
+.cs-gallery figure { margin: 0; overflow: hidden; background: var(--pale); }
+.cs-gallery img { width: 100%; object-fit: cover; transition: transform 1.2s var(--ease-out); }
+.cs-gallery__a img { aspect-ratio: 4 / 3; }
+.cs-gallery__b img { aspect-ratio: 1 / 1; }
+.cs-gallery figure:hover img { transform: scale(1.03); }
+
+
+/* Next case study: the whole band is the link. */
+.cs-next {
+  position: relative;
+  display: flex;
+  min-height: clamp(340px, 50vh, 500px);
+  margin-top: clamp(48px, 5.5vw, 84px);
+  color: var(--white);
+  background: var(--ink);
+  overflow: hidden;
+  isolation: isolate;
+}
+.cs-next__media { position: absolute; inset: 0; z-index: -1; }
+.cs-next__media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 1.4s var(--ease-out);
+}
+.cs-next__media::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(0deg, rgba(8, 0, 35, .92) 0%, rgba(8, 0, 35, .55) 55%, rgba(8, 0, 35, .4) 100%);
+  transition: background .6s var(--ease);
+}
+.cs-next:hover .cs-next__media img { transform: scale(1.05); }
+.cs-next__inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-block: clamp(36px, 5vw, 56px);
+}
+.cs-next .eyebrow { color: var(--yellow); }
+.cs-next__title {
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  gap: .28em;
+  margin-top: 14px;
+  font-family: var(--display);
+  font-size: clamp(46px, 7.4vw, 112px);
+  line-height: .95;
+  letter-spacing: -.045em;
+  font-weight: 800;
+}
+.cs-next__title .arw {
+  width: .62em; height: auto;
+  flex: none;
+  stroke-width: 1.2;
+  transition: translate .5s var(--ease-out);
+}
+.cs-next:hover .cs-next__title .arw { translate: 14px 0; }
+.cs-back {
+  padding-block: 26px;
+  border-bottom: 1px solid var(--border);
+}
+
+
+/* --- Small screens --- */
+@media (max-width: 800px) {
+  .cs-split,
+  .cs-story__grid,
+  .cs-gallery__grid { grid-template-columns: minmax(0, 1fr); }
+  .cs-statement blockquote { grid-column: 1; }
+  .cs-hero { min-height: 82vh; }
+  .cs-facts { grid-template-columns: minmax(0, 1fr); }
+  .cs-facts > div { padding: 14px 0; }
+  .cs-facts > div + div { padding-left: 0; border-left: 0; border-top: 1px solid rgba(255, 255, 255, .24); }
+  .cs-scope__list { grid-template-columns: minmax(0, 1fr); }
+  .cs-scope__list li:nth-child(2) { border-top: 0; }
+  .cs-copy p:not(.eyebrow) { font-size: 17px; }
+  .cs-gallery__b img { aspect-ratio: 4 / 3; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-hero__media img,
+  .js .cs-hero__eyebrow, .js .cs-hero__title, .js .cs-hero__lede, .js .cs-facts {
+    animation: none; opacity: 1; translate: none; scale: none; clip-path: none;
+  }
+}
+
+
+/* Statement band, centred */
+.cs-statement .cs-split { display: block; }
+.cs-statement blockquote { margin-inline: auto; max-width: 26ch; text-align: center; }
+.cs-statement blockquote::before { margin-inline: auto; }
+
+/* What we handle: same landing as the About page service squares, a purple
+   rule drawing across each item as it pops in. */
+.cs-scope__list li { position: relative; }
+.cs-scope__list li::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: -1px;
+  height: 2px;
+  background: var(--purple);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .8s var(--ease-out) .25s;
+}
+.cs-scope__list li.is-in::after { transform: scaleX(1); }
+
+/* Video slot waiting on footage: the event photograph stands in. */
+.video-frame--soon img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.42) saturate(.85); }
+.video-frame--soon p {
+  position: absolute; left: 50%; top: 50%; translate: -50% -50%;
+  margin: 0; padding: 13px 20px;
+  border: 1px solid rgba(255, 255, 255, .55);
+  font-size: 13px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+  white-space: nowrap; color: var(--white);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-scope__list li::after { transform: scaleX(1); transition: none; }
+}
